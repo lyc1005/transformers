@@ -574,22 +574,22 @@ class SquadProcessor(DataProcessor):
         else:
             examples = []
             for entry in tqdm(input_data):
-                context_text = input_data[5]
+                context_text = entry[5]
                 title = context_text.split('.')[0]
-                qas_id = input_data[0]
-                question_text = input_data[1]
+                qas_id = entry[0]
+                question_text = entry[1]
                 start_position_character = None
                 answer_text = None
                 answers = []
-                is_impossible = input_data[4]
+                is_impossible = entry[4]
 
                 if not is_impossible:
                     if is_training:
-                        answer = {'text': input_data[2], 'answer_start': input_data[3]}
+                        answer = {'text': entry[2], 'answer_start': entry[3]}
                         answer_text = answer["text"]
                         start_position_character = answer["answer_start"]
                     else:
-                        answers = [{'text': input_data[2], 'answer_start': input_data[3]}]
+                        answers = [{'text': entry[2], 'answer_start': entry[3]}]
 
                 example = SquadExample(
                     qas_id=qas_id,
