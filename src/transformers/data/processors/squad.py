@@ -581,7 +581,7 @@ class SquadProcessor(DataProcessor):
                 start_position_character = None
                 answer_text = None
                 answers = []
-                is_impossible = entry[4]
+                is_impossible = False if entry[4]=='FALSE' else True
 
                 if not is_impossible:
                     if is_training:
