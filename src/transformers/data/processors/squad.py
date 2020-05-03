@@ -516,20 +516,19 @@ class SquadProcessor(DataProcessor):
         if self.dev_file is None:
             raise ValueError("SquadProcessor should be instantiated via SquadV1Processor or SquadV2Processor")
 
-        if filename.endswith('.json'):
-            with open(
-                os.path.join(data_dir, self.dev_file if filename is None else filename), "r", encoding="utf-8"
-            ) as reader:
-                input_data = json.load(reader)["data"]
-            return self._create_examples(input_data, "dev")
-    
-        elif filename.endswith('.csv'):
+        if filename.endswith('.csv'):
             with open(os.path.join(data_dir, filename), "r", encoding="utf-8") as reader2:
                 input_csv = csv.reader(reader2)
                 records = []
                 for row in input_csv:
                     records.append(row)
             return self._create_examples(records[1:], "dev")
+        
+        if filename.endswith('.json'):
+            with open(os.path.join(data_dir, self.dev_file if filename is None else filename),'r',encoding="utf-8") as reader:
+                input_data = json.load(reader)["data"]
+            return self._create_examples(input_data, "dev")
+    
 
     def _create_examples(self, input_data, set_type):
         is_training = set_type == "train"
